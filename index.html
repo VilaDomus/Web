@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Moderní a plně vybavený apartmán Vila Domus k pronájmu. Ubytování až pro 4 osoby s Wi-Fi, parkováním a skvělou dostupností na výlety v okolí. Rezervujte si svůj pobyt!">
+    <title>Vila Domus | Moderní apartmán k pronájmu</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #c2a88a; 
+            --primary-dark: #a88d6c; 
+            --text-dark: #4a4238; 
+            --bg-light: #fcfaf8; 
+            --white: #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-dark); line-height: 1.7; background-color: var(--bg-light); }
+        h1, h2, h3, .nav-links a, .btn, .toggle-btn, th { font-family: 'Quicksand', sans-serif; }
+
+        /* NAVIGACE */
+        nav { position: sticky; top: 0; background-color: var(--white); box-shadow: 0 2px 15px rgba(74, 66, 56, 0.08); z-index: 1000; display: flex; justify-content: center; align-items: center; padding: 15px 10px; transition: top 0.3s ease-in-out; }
+        .nav-logo-container { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); }
+        .nav-logo { height: 55px; width: auto; display: block; transition: transform 0.3s ease; }
+        .nav-logo:hover { transform: scale(1.05); }
+        
+        .nav-links { display: flex; gap: 15px; justify-content: center; align-items: center; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; }
+        .nav-links::-webkit-scrollbar { display: none; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 700; font-size: 1rem; padding: 8px 15px; border-radius: 8px; transition: all 0.3s ease; white-space: nowrap; flex-shrink: 0; }
+        .nav-links a:hover { background-color: var(--bg-light); color: var(--primary-dark); transform: translateY(-2px); }
+
+        /* HLAVIČKA */
+        header { background-image: linear-gradient(rgba(150, 125, 100, 0.75), rgba(150, 125, 100, 0.75)), url('photouvod.jpg'); background-size: cover; background-position: center; background-color: var(--text-dark); color: var(--primary-color); text-align: center; padding: 6rem 1rem 7rem; }
+        header h1 { margin: 0; font-size: 3.5rem; letter-spacing: 2px; color: var(--white); text-shadow: 0 2px 10px rgba(0,0,0,0.5); text-wrap: balance; }
+        header p { font-size: 1.2rem; margin-top: 15px; color: var(--white); opacity: 0.9; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+        
+        /* OBSAH A KONTEJNERY */
+        .container { max-width: 800px; margin: -3rem auto 0; padding: 3rem; background: var(--white); box-shadow: 0 15px 40px rgba(74, 66, 56, 0.05); border-radius: 12px; position: relative; z-index: 10; }
+        .section { margin-bottom: 4rem; scroll-margin-top: 120px; }
+        h2 { color: var(--text-dark); border-bottom: 3px solid var(--primary-color); padding-bottom: 10px; font-size: 1.8rem; display: block; width: fit-content; text-align: left; margin-left: 0; margin-right: auto; }
+        
+        .rules-list { margin: 25px 0; padding-left: 20px; line-height: 1.8; }
+        .rules-list li { margin-bottom: 5px; }
+
+        /* MŘÍŽKY PRO PC */
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .feature-card { display: flex; align-items: center; justify-content: center; text-align: center; background: var(--bg-light); padding: 20px; border-radius: 12px; border: 1px solid transparent; font-weight: 600; color: var(--text-dark); transition: all 0.3s ease; }
+        .feature-card:hover { background: var(--white); border-color: var(--primary-color); box-shadow: 0 10px 20px rgba(74, 66, 56, 0.05); transform: translateY(-3px); }
+        
+        .reviews { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+        .review-card { display: flex; flex-direction: column; justify-content: space-between; background: var(--bg-light); padding: 25px; border-radius: 12px; border: 1px solid transparent; transition: all 0.3s ease; }
+        .review-card:hover { background: var(--white); border-color: var(--primary-color); box-shadow: 0 10px 20px rgba(74, 66, 56, 0.05); transform: translateY(-3px); }
+        .review-text { font-style: italic; margin-bottom: 15px; color: var(--text-dark); }
+        .review-author { font-weight: 700; color: var(--primary-dark); text-align: right; font-size: 0.95rem; }
+
+        /* FAQ (Časté dotazy) */
+        .faq-item { border-bottom: 1px solid #eee; margin-bottom: 10px; }
+        .faq-question { width: 100%; text-align: left; background: none; border: none; padding: 15px 0; font-size: 1.05rem; font-weight: 600; color: var(--text-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-family: 'Quicksand', sans-serif; transition: color 0.3s; }
+        .faq-question:hover { color: var(--primary-dark); }
+        .faq-question::after { content: '+'; font-size: 1.5rem; color: var(--primary-color); transition: transform 0.3s ease; }
+        .faq-question.active::after { transform: rotate(45deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; color: #666; font-size: 0.95rem; }
+        .faq-answer p { margin: 0 0 15px 0; padding-right: 20px; }
+
+        /* TLAČÍTKA */
+        .mobile-only-btn { display: none; text-align: center; margin-top: 15px; }
+        .toggle-btn { background: transparent; color: var(--primary-dark); border: 1px solid var(--primary-color); padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 0.95rem; }
+        .toggle-btn:hover { background: var(--bg-light); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+        /* POSUVNÁ FOTOGALERIE */
+        .gallery-wrapper { position: relative; margin-top: 30px; }
+        .gallery-slider { display: flex; gap: 15px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
+        .gallery-slider::-webkit-scrollbar { display: none; }
+        .gallery-slider img { flex: 0 0 calc(33.333% - 10px); height: 200px; object-fit: cover; border-radius: 10px; cursor: pointer; scroll-snap-align: start; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: transform 0.3s ease; }
+        .gallery-slider img:hover { transform: scale(1.03); z-index: 2; position: relative; }
+        
+        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: var(--primary-color); color: var(--white); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; opacity: 0.9; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .slider-btn:hover { background: var(--primary-dark); transform: scale(1.1) translateY(-45%); }
+        .prev-btn { left: -20px; }
+        .next-btn { right: -20px; }
+
+        /* ZVĚTŠENÍ FOTEK (LIGHTBOX) */
+        .lightbox { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(30, 25, 20, 0.9); align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+        .lightbox.show { opacity: 1; }
+        .lightbox img { max-width: 90%; max-height: 90vh; border-radius: 8px; box-shadow: 0 5px 30px rgba(0,0,0,0.5); object-fit: contain; }
+        .lightbox-close { position: absolute; top: 20px; right: 30px; color: var(--white); font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .lightbox-close:hover { color: var(--primary-color); transform: scale(1.1); }
+
+        /* TABULKA CENÍKU */
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; min-width: 400px; font-size: 0.95rem; }
+        th, td { padding: 15px; border-bottom: 1px solid #eee; text-align: left; }
+        th { background-color: var(--bg-light); color: var(--primary-dark); font-weight: 700; }
+
+        /* MAPA A HLAVNÍ TLAČÍTKA */
+        .map-wrapper { width: 100%; height: 400px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-top: 20px; }
+        .map-wrapper iframe { width: 100%; height: 100%; border: none; }
+        .btn { display: inline-block; background: var(--primary-color); color: var(--white); padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 25px; transition: 0.3s; }
+        .btn:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        footer { text-align: center; padding: 2rem 1rem 3rem; color: #888; font-size: 0.9rem; }
+
+        /* --- RESPONZIVNÍ ÚPRAVY --- */
+        @media (max-width: 950px) {
+            nav { flex-direction: column; padding: 10px 0 5px; }
+            .nav-logo-container { position: relative; left: 0; top: 0; transform: none; margin-bottom: 5px; }
+            .nav-logo { height: 45px; }
+            .nav-links { width: 100%; justify-content: flex-start; padding: 0 15px 5px 15px; gap: 10px; box-sizing: border-box; }
+            .nav-links a { font-size: 0.9rem; padding: 6px 12px; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 3.5rem 1rem 4rem; }
+            header h1 { font-size: 1.8rem; }
+            header p { font-size: 0.9rem; }
+            
+            .container { padding: 1.5rem; margin-top: -2rem; }
+            .section { margin-bottom: 3rem; }
+            h2 { font-size: 1.5rem; }
+            
+            .mobile-only-btn { display: block; }
+            
+            #trips-container:not(.expanded) .feature-card:nth-child(n+5) { display: none; }
+            #reviews-container:not(.expanded) .review-card:nth-child(n+2) { display: none; }
+            /* Omezení FAQ na mobilu (zobrazí pouze první 3 otázky, zbytek se skryje pod tlačítko) */
+            #faq-container:not(.expanded) .faq-item:nth-child(n+4) { display: none; }
+
+            .features { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .feature-card { padding: 12px 8px; font-size: 0.85rem; line-height: 1.3; }
+            .reviews { grid-template-columns: 1fr; }
+            
+            .gallery-slider img { flex: 0 0 calc(50% - 7.5px); }
+            th, td { padding: 10px; font-size: 0.85rem; }
+            .map-wrapper { height: 200px; } 
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="#" style="text-decoration: none;" class="nav-logo-container">
+            <img src="logo.png" alt="Logo Vila Domus" class="nav-logo" onerror="this.style.display='none'">
+        </a>
+        <div class="nav-links">
+            <a href="#informace">Informace</a>
+            <a href="#fotogalerie">Fotogalerie</a>
+            <a href="#lokalita">Kde nás najdete</a>
+            <a href="#cenik">Ceník</a>
+            <a href="#hodnoceni">Hodnocení</a>
+            <a href="#rezervace">Rezervace</a>
+            <a href="#kontakt">Kontakt</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Moderní apartmán Vila Domus</h1>
+        <p>U nás se budete cítit jako doma.</p>
+    </header>
+
+    <div class="container">
+        
+        <div id="informace" class="section">
+            <h2>O apartmánu</h2>
+            <p>Moderní a útulný apartmán se nachází v zrekonstruované vile z počátku 20. století. Samotný byt prošel v roce 2025 precizní renovací, nabízí prvotřídní moderní vybavení a splňuje nejvyšší nároky na komfort a kvalitu bydlení. Celý byt byl navržen designéry s důrazem na funkčnost, estetiku a komfort a je uzpůsoben k pohodlnému ubytování až čtyř osob.</p>
+            
+            <h3 style="margin-top: 40px;">Pro vaše dokonalé pohodlí</h3>
+            <div class="features">
+                <div class="feature-card"><span>Moderní plně vybavená kuchyň</span></div>
+                <div class="feature-card"><span>Možnost úschovy jízdních kol</span></div>
+                <div class="feature-card"><span>Parkování na pozemku</span></div>
+                <div class="feature-card"><span>Venkovní posezení</span></div>
+                <div class="feature-card"><span>Chytrá televize + Wi-Fi připojení</span></div>
+                <div class="feature-card"><span>Deskové hry k zapůjčení</span></div>
+            </div>
+        </div>
+
+        <div id="fotogalerie" class="section">
+            <h2>Fotogalerie</h2>
+            <div class="gallery-wrapper">
+                <button class="slider-btn prev-btn" onclick="slideGallery(-1)">❮</button>
+                <div class="gallery-slider" id="gallerySlider">
+                    <img src="photo2.jpg" alt="Interiér apartmánu 2" onclick="openLightbox(this.src)">
+                    <img src="photo3.jpg" alt="Interiér apartmánu 3" onclick="openLightbox(this.src)">
+                    <img src="photo4.jpg" alt="Interiér apartmánu 4" onclick="openLightbox(this.src)">
+                    <img src="photo5.jpg" alt="Interiér apartmánu 5" onclick="openLightbox(this.src)">
+                    <img src="photo6.jpg" alt="Interiér apartmánu 6" onclick="openLightbox(this.src)">
+                    <img src="photo7.jpg" alt="Interiér apartmánu 7" onclick="openLightbox(this.src)">
+                    <img src="photo8.jpg" alt="Interiér apartmánu 8" onclick="openLightbox(this.src)">
+                    <img src="photo9.jpg" alt="Interiér apartmánu 9" onclick="openLightbox(this.src)">
+                    <img src="photo1.jpg" alt="Interiér apartmánu 1" onclick="openLightbox(this.src)">
+                    <img src="photo10.jpg" alt="Interiér apartmánu 10" onclick="openLightbox(this.src)">
+                    <img src="photo11.jpg" alt="Interiér apartmánu 11" onclick="openLightbox(this.src)">
+                    <img src="photo12.jpg" alt="Interiér apartmánu 12" onclick="openLightbox(this.src)">
+                </div>
+                <button class="slider-btn next-btn" onclick="slideGallery(1)">❯</button>
+            </div>
+        </div>
+
+        <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+            <span class="lightbox-close">×</span>
+            <img id="lightbox-img" src="" alt="Zvětšená fotografie">
+        </div>
+
+        <div id="lokalita" class="section">
+            <h2>Kde nás najdete</h2>
+            <p>Vila Domus se nachází ve skvělé a klidné lokalitě. Veškerá občanská vybavenost je v bezprostřední blízkosti, supermarket se nachází pouhých 100 metrů od vily, vlakové a autobusové nádraží je vzdáleno 1000 m a na náměstí dojdete během několika minut.</p>
+            
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2545.9046814523413!2d15.9138962!3d50.3496832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470e87003a841e9f%3A0xd2d170d092389111!2sUbytov%C3%A1n%C3%AD%20Vila%20Domus!5e0!3m2!1scs!2scz!4v1777836944895!5m2!1scs!2scz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <h3 style="margin-top: 40px;">Skvělý výchozí bod pro výlety</h3>
+            
+            <div class="features" id="trips-container">
+                <div class="feature-card"><span>Pevnost Josefov (1 km)</span></div>
+                <div class="feature-card"><span>Lázně Velichovky (3 km)</span></div>
+                <div class="feature-card"><span>Hospital Kuks (6 km)</span></div>
+                <div class="feature-card"><span>Vodní nádrž Rozkoš (10 km)</span></div>
+                <div class="feature-card"><span>Babiččino údolí (12 km)</span></div>
+                <div class="feature-card"><span>ZOO Safari Dvůr (13 km)</span></div>
+                <div class="feature-card"><span>Hradec Králové (16 km)</span></div>
+                <div class="feature-card"><span>Nové Město n. Metují (17 km)</span></div>
+                <div class="feature-card"><span>Zámek Opočno (17 km)</span></div>
+                <div class="feature-card"><span>Zámek Náchod (20 km)</span></div>
+                <div class="feature-card"><span>Adršpach (32 km)</span></div>
+                <div class="feature-card"><span>Krkonoše (37 km)</span></div>
+            </div>
+            
+            <div class="mobile-only-btn">
+                <button id="trips-btn" class="toggle-btn" onclick="toggleTrips()">Zobrazit další výlety</button>
+            </div>
+        </div>
+
+        <div id="cenik" class="section">
+            <h2>Ceník ubytování</h2>
+            <div class="table-responsive">
+                <table>
+                    <tr>
+                        <th>Sezóna</th>
+                        <th>1 - 2 osoby</th>
+                        <th>3 osoby</th>
+                        <th>4 osoby</th>
+                    </tr>
+                    <tr>
+                        <td>Duben - Září</td>
+                        <td>2 100 Kč</td>
+                        <td>2 700 Kč</td>
+                        <td>3 300 Kč</td>
+                    </tr>
+                    <tr>
+                        <td>Říjen - Březen</td>
+                        <td>1 800 Kč</td>
+                        <td>2 400 Kč</td>
+                        <td>3 000 Kč</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="margin-top: 20px; font-size: 0.95rem; color: #666;">
+                <p>Ceny jsou uvedeny za jednu noc. Při pobytu nad 10 nocí získáte slevu 10 % na celý pobyt.</p>
+                <p>Platbu lze provést s předstihem bankovním převodem, nebo při samotném příjezdu prostřednictvím QR kódu či v hotovosti.</p>
+            </div>
+        </div>
+
+        <div id="hodnoceni" class="section">
+            <h2>Napsali o nás</h2>
+            
+            <div class="reviews" id="reviews-container">
+                <div class="review-card">
+                    <div class="review-text">„Výjimečné ubytování, skvělá vybavenost, moderní a naprosto čisté. Parking přímu u objektu za vraty. Skvělá komunikace. Cena je za mě nižší než by si ubytování mělo účtovat. Není co vytknout.“</div>
+                    <div class="review-author">— Světlana, Google Maps</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-text">„Krásný, stylově zařízený a skvěle vybavený apartmán. Ubytování předčilo naše očekávání. Mohu jen doporučit. Vše bylo perfektní. Moc jsme si náš pobyt u Zdeňka užili.“</div>
+                    <div class="review-author">— Jan, Google Maps</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-text">„Byl to úžasný pobyt. Byt je ve výborném stavu a hostitel je velmi vstřícný. Vřele doporučuji. Určitě se v budoucnu vrátím.“</div>
+                    <div class="review-author">— Ismail, Google Maps</div>
+                </div>
+            </div>
+
+            <div class="mobile-only-btn">
+                <button id="reviews-btn" class="toggle-btn" onclick="toggleReviews()">Zobrazit další recenze</button>
+            </div>
+        </div>
+
+        <div id="pravidla" class="section">
+            <h2>Domácí pravidla</h2>
+            <ul class="rules-list">
+                <li>Maximální počet hostů: 4</li>
+                <li>Check-in: od 15:00</li>
+                <li>Check-out: do 11:00</li>
+                <li>Kouření uvnitř apartmánu je zakázáno</li>
+                <li>Domácí mazlíčci nejsou povoleni</li>
+                <li>Host je před příjezdem povinen poskytnout osobní údaje za účelem splnění zákonných povinností</li>
+            </ul>
+        </div>
+
+        <!-- NOVÁ SEKCE FAQ -->
+        <div id="faq" class="section">
+            <h2>Časté otázky a odpovědi</h2>
+            <div id="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">Jaká je maximální kapacita apartmánu?</button>
+                    <div class="faq-answer"><p>Apartmán je uzpůsoben pro komfortní ubytování až 4 osob.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Nabízíte možnost parkování?</button>
+                    <div class="faq-answer"><p>Ano, naši hosté mohou bezpečně zaparkovat svá vozidla přímo na uzavřeném a oploceném pozemku u vily.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Je zajištěna úschova jízdních kol?</button>
+                    <div class="faq-answer"><p>Ano, pro cyklisty máme připravenou uzamykatelnou kolárnu, kde si můžete svá kola bez obav uschovat.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Jak je vybavena kuchyně a jaké nádobí je k dispozici?</button>
+                    <div class="faq-answer"><p>V kuchyni najdete veškeré potřebné spotřebiče a nádobí – od talířů a příborů přes sklenice na víno až po praktické doplňky, jako jsou ubrousky či sáčky na svačinu.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Jsou v ubytování k dispozici ručníky a toaletní potřeby?</button>
+                    <div class="faq-answer"><p>Ano, pro každého hosta jsou připraveny čisté ručníky. V koupelně je navíc k dispozici fén, šampon a sprchový gel.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Máte volnou kapacitu během festivalu Brutal Assault 2026?</button>
+                    <div class="faq-answer"><p>Je nám líto, ale termín během konání festivalu Brutal Assault 2026 je již plně obsazen.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Máte volnou kapacitu během festivalu Rock for People 2026?</button>
+                    <div class="faq-answer"><p>Je nám líto, ale termín během konání festivalu Rock for People 2026 je již plně obsazen.</p></div>
+                </div>
+            </div>
+
+            <div class="mobile-only-btn">
+                <button id="faq-btn" class="toggle-btn" onclick="toggleFaq()">Zobrazit další otázky</button>
+            </div>
+        </div>
+
+        <div id="rezervace" class="section">
+            <h2>Rezervace pobytu</h2>
+            <p>Pro zjištění aktuální dostupnosti a volných termínů nás prosím kontaktujte telefonicky nebo e-mailem.</p>
+        </div>
+
+        <div id="kontakt" class="section">
+            <h2>Kontakt</h2>
+            <p>Zaujal vás náš apartmán? Pro rezervaci, dotazy nebo ověření dostupnosti nás neváhejte kontaktovat.</p>
+            <div style="text-align: center; margin-top: 35px;">
+                <p style="font-size: 1.3rem; margin: 5px 0; color: var(--primary-dark);"><strong>+420 702 979 039</strong></p>
+                <p style="font-size: 1.3rem; margin: 5px 0; color: var(--primary-dark);"><strong>viladomus@seznam.cz</strong></p>
+                <a href="mailto:viladomus@seznam.cz" class="btn">Napsat e-mail pro rezervaci</a>
+            </div>
+        </div>
+        
+    </div>
+
+    <footer><p>© 2026 Vila Domus. Těšíme se na vaši návštěvu.</p></footer>
+
+    <script>
+        // --- NAVIGACE (MOBIL) ---
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', function() {
+            if (window.innerWidth > 950) return; 
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navbar.style.top = "-100px";
+            } else {
+                navbar.style.top = "0";
+            }
+            lastScrollTop = scrollTop;
+        });
+
+        // --- FOTOGALERIE ---
+        const slider = document.getElementById('gallerySlider');
+        let autoSlideInterval = null;
+        let userInteracted = false; 
+
+        // Trvalé zastavení automatiky
+        function stopSlide() {
+            if (autoSlideInterval) {
+                clearInterval(autoSlideInterval);
+                autoSlideInterval = null;
+            }
+            userInteracted = true; 
+        }
+
+        function slideGallery(direction) {
+            stopSlide(); // Zastavíme při kliknutí na šipku
+            const itemWidth = slider.querySelector('img').clientWidth + 15;
+            slider.scrollBy({ left: direction * itemWidth, behavior: 'smooth' });
+        }
+
+        function slideNextAuto() {
+            if (userInteracted) return;
+            const itemWidth = slider.querySelector('img').clientWidth + 15;
+            if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
+                slider.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                slider.scrollBy({ left: itemWidth, behavior: 'smooth' });
+            }
+        }
+
+        function startSlide() {
+            if (userInteracted || autoSlideInterval) return; 
+            autoSlideInterval = setInterval(slideNextAuto, 4000);
+        }
+
+        // Zastavení při interakci
+        slider.addEventListener('touchstart', stopSlide, {passive: true});
+        
+        function openLightbox(src) {
+            stopSlide();
+            document.getElementById('lightbox-img').src = src;
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'flex';
+            setTimeout(() => lightbox.classList.add('show'), 10);
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('show');
+            setTimeout(() => lightbox.style.display = 'none', 300);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting) startSlide();
+            else if (autoSlideInterval) {
+                clearInterval(autoSlideInterval);
+                autoSlideInterval = null;
+            }
+        }, { threshold: 0.2 });
+        observer.observe(document.getElementById('fotogalerie'));
+
+        // --- ROZBALOVÁNÍ (VÝLETY, RECENZE, FAQ) ---
+        function toggleTrips() {
+            const container = document.getElementById('trips-container');
+            const btn = document.getElementById('trips-btn');
+            container.classList.toggle('expanded');
+            btn.innerHTML = container.classList.contains('expanded') ? 'Skrýt tipy na výlety' : 'Zobrazit další výlety';
+        }
+
+        function toggleReviews() {
+            const container = document.getElementById('reviews-container');
+            const btn = document.getElementById('reviews-btn');
+            container.classList.toggle('expanded');
+            btn.innerHTML = container.classList.contains('expanded') ? 'Skrýt recenze' : 'Zobrazit další recenze';
+        }
+
+        function toggleFaq() {
+            const container = document.getElementById('faq-container');
+            const btn = document.getElementById('faq-btn');
+            container.classList.toggle('expanded');
+            btn.innerHTML = container.classList.contains('expanded') ? 'Skrýt otázky' : 'Zobrazit další otázky';
+        }
+
+        // --- FAQ AKORDEON ---
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const answer = this.nextElementSibling;
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
