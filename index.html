@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Plně vybavený apartmán až pro 4 osoby s terasou, parkováním, klimatizací, úschovnou jízdních kol, plně vybavenou kuchyní, Wi-Fi připojením, a chytrou televizí. Rezervujte si svůj pobyt!">
-    <title>Moderním apartmán Vila Domus | Ubytování Jaroměř</title>
+    <title>Moderní apartmán Vila Domus | Ubytování Jaroměř</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +34,30 @@
         .nav-links::-webkit-scrollbar { display: none; }
         .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 700; font-size: 1rem; padding: 8px 15px; border-radius: 8px; transition: all 0.3s ease; white-space: nowrap; flex-shrink: 0; }
         .nav-links a:hover { background-color: var(--bg-light); color: var(--primary-dark); transform: translateY(-2px); }
+
+        /* PLOVOUCÍ TLAČÍTKO REZERVACE */
+        .floating-reservation-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-dark);
+            color: var(--white);
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            z-index: 9999;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .floating-reservation-btn:hover {
+            background-color: var(--text-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
+        }
 
         /* HLAVIČKA */
         header { background-image: linear-gradient(rgba(150, 125, 100, 0.75), rgba(150, 125, 100, 0.75)), url('photouvod.jpg'); background-size: cover; background-position: center; background-color: var(--text-dark); color: var(--primary-color); text-align: center; padding: 6rem 1rem 7rem; }
@@ -67,6 +91,55 @@
         .faq-question.active::after { transform: rotate(45deg); }
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; color: #666; font-size: 0.95rem; }
         .faq-answer p { margin: 0 0 15px 0; padding-right: 20px; }
+
+        /* --- VLASTNÍ ELEGANTNÍ KALENDÁŘ --- */
+        .custom-calendar { width: 100%; background: var(--white); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #f0e6dd; overflow: hidden; margin-bottom: 25px; }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: var(--bg-light); border-bottom: 1px solid #f0e6dd; }
+        .calendar-header button { background: none; border: none; font-size: 1.5rem; color: var(--primary-color); cursor: pointer; transition: 0.3s; font-weight: bold; }
+        .calendar-header button:hover { color: var(--primary-dark); transform: scale(1.1); }
+        .calendar-header h3 { margin: 0; color: var(--text-dark); font-size: 1.3rem; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; padding: 15px; }
+        .day-name { text-align: center; font-weight: 700; color: var(--primary-dark); font-size: 0.9rem; margin-bottom: 10px; }
+        
+        .calendar-day { text-align: center; padding: 10px 0; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; border: 1px solid transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 45px; }
+        .calendar-day.empty { visibility: hidden; }
+        .calendar-day.available { background-color: var(--white); color: var(--text-dark); }
+        .calendar-day.available:hover { background-color: var(--primary-color); color: var(--white); transform: translateY(-2px); }
+        .calendar-day.booked { background-color: #f5f5f5; color: #bbb; text-decoration: line-through; cursor: not-allowed; }
+        
+        /* Styly pro vybraný rozsah termínů */
+        .calendar-day.selected { background-color: var(--primary-color); color: var(--white); }
+        .calendar-day.in-range { background-color: #f4eee6; color: var(--text-dark); border-radius: 0; }
+
+        /* Styly pro dny, kdy lze pouze přijet nebo odjet */
+        .calendar-day.only-checkout { background: linear-gradient(135deg, var(--white) 50%, #f5f5f5 50%); color: var(--text-dark); }
+        .calendar-day.only-checkin { background: linear-gradient(135deg, #f5f5f5 50%, var(--white) 50%); color: var(--text-dark); }
+        
+        .day-subtext { font-size: 0.55rem; font-weight: 700; color: #b97a38; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1; }
+
+        .calendar-loading { text-align: center; padding: 25px; font-style: italic; color: #777; font-size: 0.95rem; }
+        
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+        @keyframes dots {
+            0% { content: ''; }
+            25% { content: '.'; }
+            50% { content: '..'; }
+            75% { content: '...'; }
+        }
+        
+        .reservation-form-container { background: var(--bg-light); padding: 30px; border-radius: 12px; margin-top: 10px; border: 1px solid #f0e6dd; scroll-margin-top: 100px; }
+        .reservation-form-container h3 { margin-top: 0; color: var(--primary-dark); }
+        
+        .reservation-form .form-group { margin-bottom: 15px; }
+        .reservation-form label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
+        .reservation-form input, .reservation-form select, .reservation-form textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 1rem; box-sizing: border-box; transition: border-color 0.3s; }
+        .reservation-form input:focus, .reservation-form select:focus, .reservation-form textarea:focus { outline: none; border-color: var(--primary-color); }
+        .form-row { display: flex; gap: 15px; }
+        .form-group.half { flex: 1; }
+        .submit-btn { width: 100%; border: none; font-size: 1.1rem; padding: 15px; cursor: pointer; text-align: center; }
 
         /* TLAČÍTKA */
         .mobile-only-btn { display: none; text-align: center; margin-top: 15px; }
@@ -127,7 +200,6 @@
             
             #trips-container:not(.expanded) .feature-card:nth-child(n+5) { display: none; }
             #reviews-container:not(.expanded) .review-card:nth-child(n+2) { display: none; }
-            /* Omezení FAQ na mobilu (zobrazí pouze první 3 otázky, zbytek se skryje pod tlačítko) */
             #faq-container:not(.expanded) .faq-item:nth-child(n+4) { display: none; }
 
             .features { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -137,10 +209,19 @@
             .gallery-slider img { flex: 0 0 calc(50% - 7.5px); }
             th, td { padding: 10px; font-size: 0.85rem; }
             .map-wrapper { height: 200px; } 
+            
+            .reservation-form-container { padding: 20px; }
+            .form-row { flex-direction: column; gap: 0; }
+            .calendar-day { padding: 8px 0; font-size: 0.9rem; }
+            
+            .floating-reservation-btn { bottom: 20px; right: 20px; padding: 14px 26px; font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
+
+    <!-- PLOVOUCÍ TLAČÍTKO REZERVACE VIDITELNÉ VŠUDE -->
+    <a href="#rezervace" class="floating-reservation-btn">Rezervace</a>
 
     <nav id="navbar">
         <a href="#" style="text-decoration: none;" class="nav-logo-container">
@@ -302,7 +383,6 @@
             </ul>
         </div>
 
-        <!-- NOVÁ SEKCE FAQ -->
         <div id="faq" class="section">
             <h2>Časté otázky a odpovědi</h2>
             <div id="faq-container">
@@ -341,9 +421,76 @@
             </div>
         </div>
 
+        <!-- REZERVACE -->
         <div id="rezervace" class="section">
             <h2>Rezervace pobytu</h2>
-            <p>Pro zjištění aktuální dostupnosti a volných termínů nás prosím kontaktujte telefonicky nebo e-mailem.</p>
+            <p>Vyberte si v kalendáři termín pobytu, vyplňte své údaje a odešlete žádost o rezervaci. Obratem vám e-mailem nebo přes Whatsapp zašleme potvrzení rezervace (nejpozději do 24 hodin).</p>
+            
+            <!-- Vlastní Elegantní Kalendář -->
+            <div class="custom-calendar">
+                <div class="calendar-header">
+                    <button onclick="changeMonth(-1)">❮</button>
+                    <h3 id="calendar-month-year">Načítání...</h3>
+                    <button onclick="changeMonth(1)">❯</button>
+                </div>
+                <div id="calendar-loading" class="calendar-loading">
+                    Načítání volných termínů<span class="loading-dots"></span>
+                </div>
+                <div class="calendar-grid" id="calendar-grid" style="display: none;">
+                    <div class="day-name">Po</div><div class="day-name">Út</div><div class="day-name">St</div>
+                    <div class="day-name">Čt</div><div class="day-name">Pá</div><div class="day-name">So</div><div class="day-name">Ne</div>
+                </div>
+            </div>
+
+            <div class="reservation-form-container" id="form-container">
+                <h3>Žádost o rezervaci</h3>
+                
+                <form id="reservation-form" action="https://api.web3forms.com/submit" method="POST" class="reservation-form">
+                    <input type="hidden" name="access_key" value="95e2966a-8825-4597-bea4-d4fc248c9f57">
+                    <input type="hidden" name="subject" value="Nová poptávka z webu Vila Domus">
+                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                    <!-- DATUM PŘÍJEZDU A ODJEZDU -->
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="date-from">Datum příjezdu</label>
+                            <input type="date" id="date-from" name="Příjezd" required>
+                        </div>
+                        <div class="form-group half">
+                            <label for="date-to">Datum odjezdu</label>
+                            <input type="date" id="date-to" name="Odjezd" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Jméno a příjmení</label>
+                        <input type="text" id="name" name="Jméno" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="E-mail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefonní číslo</label>
+                        <input type="tel" id="phone" name="Telefon" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guests">Počet osob</label>
+                        <select id="guests" name="Počet osob" required>
+                            <option value="1">1 osoba</option>
+                            <option value="2" selected>2 osoby</option>
+                            <option value="3">3 osoby</option>
+                            <option value="4">4 osoby</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Poznámka (volitelné)</label>
+                        <textarea id="message" name="Poznámka" rows="3" placeholder="Máte nějaké speciální přání? Napište nám ho sem."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn submit-btn">Odeslat žádost o rezervaci (termín obratem potvrdíme)</button>
+                </form>
+            </div>
         </div>
 
         <div id="kontakt" class="section">
@@ -352,7 +499,7 @@
             <div style="text-align: center; margin-top: 35px;">
                 <p style="font-size: 1.3rem; margin: 5px 0; color: var(--primary-dark);"><strong>+420 702 979 039</strong></p>
                 <p style="font-size: 1.3rem; margin: 5px 0; color: var(--primary-dark);"><strong>viladomus@seznam.cz</strong></p>
-                <a href="mailto:viladomus@seznam.cz" class="btn">Napsat e-mail pro rezervaci</a>
+                <a href="mailto:viladomus@seznam.cz" class="btn">Napsat e-mail</a>
             </div>
         </div>
         
@@ -361,7 +508,7 @@
     <footer><p>© 2026 Vila Domus. Těšíme se na vaši návštěvu.</p></footer>
 
     <script>
-        // --- NAVIGACE (MOBIL) ---
+        // --- NAVIGACE A GALERIE ---
         let lastScrollTop = 0;
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', function() {
@@ -375,22 +522,17 @@
             lastScrollTop = scrollTop;
         });
 
-        // --- FOTOGALERIE ---
         const slider = document.getElementById('gallerySlider');
         let autoSlideInterval = null;
         let userInteracted = false; 
 
-        // Trvalé zastavení automatiky
         function stopSlide() {
-            if (autoSlideInterval) {
-                clearInterval(autoSlideInterval);
-                autoSlideInterval = null;
-            }
+            if (autoSlideInterval) { clearInterval(autoSlideInterval); autoSlideInterval = null; }
             userInteracted = true; 
         }
 
         function slideGallery(direction) {
-            stopSlide(); // Zastavíme při kliknutí na šipku
+            stopSlide(); 
             const itemWidth = slider.querySelector('img').clientWidth + 15;
             slider.scrollBy({ left: direction * itemWidth, behavior: 'smooth' });
         }
@@ -410,7 +552,6 @@
             autoSlideInterval = setInterval(slideNextAuto, 4000);
         }
 
-        // Zastavení při interakci
         slider.addEventListener('touchstart', stopSlide, {passive: true});
         
         function openLightbox(src) {
@@ -429,14 +570,10 @@
 
         const observer = new IntersectionObserver((entries) => {
             if(entries[0].isIntersecting) startSlide();
-            else if (autoSlideInterval) {
-                clearInterval(autoSlideInterval);
-                autoSlideInterval = null;
-            }
+            else if (autoSlideInterval) { clearInterval(autoSlideInterval); autoSlideInterval = null; }
         }, { threshold: 0.2 });
         observer.observe(document.getElementById('fotogalerie'));
 
-        // --- ROZBALOVÁNÍ (VÝLETY, RECENZE, FAQ) ---
         function toggleTrips() {
             const container = document.getElementById('trips-container');
             const btn = document.getElementById('trips-btn');
@@ -458,19 +595,265 @@
             btn.innerHTML = container.classList.contains('expanded') ? 'Skrýt otázky' : 'Zobrazit další otázky';
         }
 
-        // --- FAQ AKORDEON ---
         const faqQuestions = document.querySelectorAll('.faq-question');
         faqQuestions.forEach(btn => {
             btn.addEventListener('click', function() {
                 this.classList.toggle('active');
                 const answer = this.nextElementSibling;
-                if (answer.style.maxHeight) {
-                    answer.style.maxHeight = null;
-                } else {
-                    answer.style.maxHeight = answer.scrollHeight + "px";
-                }
+                if (answer.style.maxHeight) { answer.style.maxHeight = null; } 
+                else { answer.style.maxHeight = answer.scrollHeight + "px"; }
             });
         });
+
+        // ==========================================================
+        // --- OKAMŽITÉ NAČTENÍ DAT ZE STATICKÉHO SOUBORU ---
+        // ==========================================================
+        
+        let bookedDates = [];      
+        let checkInDates = [];     
+        let checkOutDates = [];    
+
+        let selectedStartDate = null; 
+        let selectedEndDate = null;   
+
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        const monthNames = ["Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec"];
+
+        async function initCalendarData() {
+            document.getElementById('calendar-loading').style.display = 'block';
+            document.getElementById('calendar-grid').style.display = 'none';
+
+            try {
+                // Stažení dat, které nám na pozadí připravil GitHub robot
+                const response = await fetch('obsazenost.json?nocache=' + new Date().getTime());
+                if (response.ok) {
+                    const data = await response.json();
+                    bookedDates = data.booked || [];
+                    checkInDates = data.checkIn || [];
+                    checkOutDates = data.checkOut || [];
+                }
+            } catch (err) {
+                console.log('Zatím nejsou k dispozici data o obsazenosti.');
+            }
+
+            document.getElementById('calendar-loading').style.display = 'none';
+            document.getElementById('calendar-grid').style.display = 'grid';
+            renderCalendar();
+        }
+
+        // FUNKCE S OMEZENÍM PRO POSUN MĚSÍCŮ (max 11 měsíců dopředu)
+        function changeMonth(dir) {
+            let tempMonth = currentMonth + dir;
+            let tempYear = currentYear;
+            
+            if (tempMonth > 11) { tempMonth = 0; tempYear++; }
+            if (tempMonth < 0) { tempMonth = 11; tempYear--; }
+
+            const realDate = new Date();
+            const minMonths = realDate.getFullYear() * 12 + realDate.getMonth();
+            const maxMonths = minMonths + 11;
+            const targetMonths = tempYear * 12 + tempMonth;
+
+            // Zabráníme překliknutí do minulosti i za limit 11 měsíců
+            if (targetMonths < minMonths || targetMonths > maxMonths) {
+                return; 
+            }
+
+            currentMonth = tempMonth;
+            currentYear = tempYear;
+            renderCalendar();
+        }
+
+        function handleDateClick(dateString) {
+            const isOldCheckIn = checkInDates.includes(dateString); 
+            const isOldCheckOut = checkOutDates.includes(dateString); 
+
+            const clickedDate = new Date(dateString);
+
+            if (!selectedStartDate || (selectedStartDate && selectedEndDate)) {
+                if (isOldCheckIn && !isOldCheckOut) {
+                    alert("V tento den nelze zahájit pobyt, je možný pouze odjezd.");
+                    return;
+                }
+                selectedStartDate = dateString;
+                selectedEndDate = null;
+                document.getElementById('date-from').value = dateString;
+                document.getElementById('date-to').value = '';
+            } else if (selectedStartDate && !selectedEndDate) {
+                if (isOldCheckOut && !isOldCheckIn && clickedDate <= new Date(selectedStartDate)) {
+                    selectedStartDate = dateString;
+                    selectedEndDate = null;
+                    document.getElementById('date-from').value = dateString;
+                    document.getElementById('date-to').value = '';
+                } else if (clickedDate > new Date(selectedStartDate)) {
+                    // Validace obsazených dnů
+                    let curr = new Date(selectedStartDate);
+                    curr.setDate(curr.getDate() + 1);
+                    let valid = true;
+                    while (curr < clickedDate) {
+                        const dStr = `${curr.getFullYear()}-${String(curr.getMonth()+1).padStart(2, '0')}-${String(curr.getDate()).padStart(2, '0')}`;
+                        if (bookedDates.includes(dStr)) {
+                            valid = false;
+                            break;
+                        }
+                        curr.setDate(curr.getDate() + 1);
+                    }
+                    
+                    if (!valid) {
+                        alert("Vybraný termín zasahuje do již obsazených dnů.");
+                        return;
+                    }
+
+                    selectedEndDate = dateString;
+                    document.getElementById('date-to').value = dateString;
+                    
+                    setTimeout(() => {
+                        const formContainer = document.querySelector('.reservation-form-container');
+                        formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        formContainer.style.boxShadow = '0 0 20px rgba(194, 168, 138, 0.6)';
+                        setTimeout(() => formContainer.style.boxShadow = '0 15px 40px rgba(74, 66, 56, 0.05)', 1500);
+                    }, 300);
+                } else {
+                    selectedStartDate = dateString;
+                    selectedEndDate = null;
+                    document.getElementById('date-from').value = dateString;
+                    document.getElementById('date-to').value = '';
+                }
+            }
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            document.getElementById('calendar-month-year').innerText = `${monthNames[currentMonth]} ${currentYear}`;
+            const grid = document.getElementById('calendar-grid');
+            
+            while (grid.children.length > 7) {
+                grid.removeChild(grid.lastChild);
+            }
+
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            let emptyDays = firstDay === 0 ? 6 : firstDay - 1;
+
+            for (let i = 0; i < emptyDays; i++) {
+                let emptyDiv = document.createElement('div');
+                emptyDiv.className = 'calendar-day empty';
+                grid.appendChild(emptyDiv);
+            }
+
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                let dayDiv = document.createElement('div');
+                
+                const checkDate = new Date(currentYear, currentMonth, i);
+                const dateString = `${currentYear}-${String(currentMonth+1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+                
+                let dayNumberSpan = document.createElement('span');
+                dayNumberSpan.innerText = i;
+                dayDiv.appendChild(dayNumberSpan);
+
+                let isOldCheckIn = checkInDates.includes(dateString);
+                let isOldCheckOut = checkOutDates.includes(dateString);
+                let isBooked = bookedDates.includes(dateString);
+
+                let isSelectedStart = (selectedStartDate === dateString);
+                let isSelectedEnd = (selectedEndDate === dateString);
+                let isInRange = (selectedStartDate && selectedEndDate && dateString > selectedStartDate && dateString < selectedEndDate);
+
+                if (checkDate < today) {
+                    dayDiv.className = 'calendar-day booked'; 
+                    dayDiv.title = 'Uplynulý termín';
+                } else if (isSelectedStart || isSelectedEnd) {
+                    dayDiv.className = 'calendar-day selected';
+                    let sub = document.createElement('span');
+                    sub.className = 'day-subtext';
+                    sub.style.color = '#fff';
+                    sub.innerText = isSelectedStart ? 'Příjezd' : 'Odjezd';
+                    dayDiv.appendChild(sub);
+                    dayDiv.onclick = () => handleDateClick(dateString);
+                } else if (isInRange) {
+                    dayDiv.className = 'calendar-day in-range';
+                    dayDiv.onclick = () => handleDateClick(dateString);
+                } else if (isOldCheckIn && isOldCheckOut) {
+                    dayDiv.className = 'calendar-day booked';
+                    dayDiv.title = 'Obsazeno';
+                } else if (isOldCheckIn) {
+                    dayDiv.className = 'calendar-day only-checkout';
+                    let sub = document.createElement('span');
+                    sub.className = 'day-subtext';
+                    sub.innerText = 'Pouze odjezd';
+                    dayDiv.appendChild(sub);
+                    dayDiv.title = 'V tento den lze pobyt pouze ukončit';
+                    dayDiv.onclick = () => handleDateClick(dateString);
+                } else if (isOldCheckOut) {
+                    dayDiv.className = 'calendar-day only-checkin';
+                    let sub = document.createElement('span');
+                    sub.className = 'day-subtext';
+                    sub.innerText = 'Pouze příjezd';
+                    dayDiv.appendChild(sub);
+                    dayDiv.title = 'V tento den lze pobyt pouze zahájit';
+                    dayDiv.onclick = () => handleDateClick(dateString);
+                } else if (isBooked) {
+                    dayDiv.className = 'calendar-day booked'; 
+                    dayDiv.title = 'Obsazeno';
+                } else {
+                    dayDiv.className = 'calendar-day available';
+                    dayDiv.title = 'Volno - klikněte pro výběr';
+                    dayDiv.onclick = () => handleDateClick(dateString);
+                }
+                grid.appendChild(dayDiv);
+            }
+        }
+
+        initCalendarData();
+
+        // ==========================================================
+        // --- ODESLÁNÍ FORMULÁŘE PŘÍMO NA STRÁNCE (BEZ PŘESMĚROVÁNÍ) ---
+        // ==========================================================
+        document.getElementById('reservation-form').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const form = e.target;
+            const btn = form.querySelector('.submit-btn');
+            const originalBtnText = btn.innerText;
+            btn.innerText = 'Odesílám...';
+            btn.disabled = true;
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('form-container').innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px; background: #fffaf0; border-radius: 8px; border: 2px solid var(--primary-color);">
+                            <h3 style="color: var(--primary-dark); font-size: 1.6rem; margin-top: 0;">🎉 Děkujeme za žádost o rezervaci!</h3>
+                            <p style="font-size: 1.1rem; color: var(--text-dark); margin-bottom: 0;">Vaše údaje jsme v pořádku přijali. Termín nyní prověříme a do 24 hodin se vám ozveme na e-mail nebo WhatsApp s potvrzením.</p>
+                        </div>
+                    `;
+                } else {
+                    alert('Něco se pokazilo, zkuste to prosím znovu.');
+                    btn.innerText = originalBtnText;
+                    btn.disabled = false;
+                }
+            })
+            .catch(error => {
+                alert('Chyba odesílání, zkontrolujte připojení a zkuste to prosím znovu.');
+                btn.innerText = originalBtnText;
+                btn.disabled = false;
+            });
+        });
+
     </script>
 </body>
 </html>
