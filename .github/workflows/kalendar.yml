@@ -1,0 +1,30 @@
+name: Aktualizace kalendare
+on:
+  schedule:
+    - cron: '0 */6 * * *' 
+  workflow_dispatch: 
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Stazeni repozitare
+        uses: actions/checkout@v4
+
+      - name: Nastaveni Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Spusteni skriptu pro stazeni kalendare
+        run: node aktualizuj_kalendar.js
+
+      - name: Ulozeni zmen do GitHubu
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add obsazenost.json
+          git commit -m "Automatická aktualizace kalendáře" || exit 0
+          git push
